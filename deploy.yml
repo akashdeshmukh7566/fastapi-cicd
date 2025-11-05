@@ -1,0 +1,24 @@
+name: python CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - users: actions/checkout@v4
+      - users: actions/setup-python@v5  
+
+        with:
+          python-version: "3.9"  
+      
+      - name: Install dependencies
+        run: pip Install -r requirements.txt
+      - name: Lint code
+        run: |
+          pip install black
+          black --check .
+
+

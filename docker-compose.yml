@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newpassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+
+  fastapi:
+    build: .
+    container_name: fastapi_app
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:newpassword@postgres:5432/mydatabase
+    ports:
+      - "8000:8000"
+    command: uvicorn test1:app --host 0.0.0.0 --port 8000
+    restart: always
+    volumes:
+      - .:/app
+
+
+volumes:
+  postgres_data:

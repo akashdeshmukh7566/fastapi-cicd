@@ -1,6 +1,5 @@
 # path parameters - a value that is part of the url use to identify a specific resource
-
-
+from pydantic import BaseModel
 from fastapi import FastAPI
 app = FastAPI()
 
@@ -11,7 +10,24 @@ async def read_item(item_id):
     }
 
 
+class user_Data(BaseModel):
+    name : str
+    full_name : str
+    Class : int
+    email : str
+    mob_num:int
 
+
+
+@app.post("/user/")
+async def fill_data(data:user_Data):
+    return {
+        "name" : data.name,
+        "full_name" : data.full_name,
+        "class"  : data.Class,
+        'email' : data.email,
+        'mob_num' : data.mob_num
+    }
 
 
 from enum import Enum
@@ -21,6 +37,7 @@ class ModelName(str, Enum):
     roy = "roy",
     sahil = "sahil",
     komal = "komal"
+
 
     
 @app.get("/models/{ModelName}")
