@@ -45,8 +45,8 @@ SENDER_PASSWORD = "akash7566"
 #     except Exception as e:
 #         return f"function not work {e}"
     
+#comment
 
-print("hello")
 def send_email(receiver_email: str, subject: str, message: str):
     msg = MIMEMultipart()
     msg["From"] = "dev@example.local"   # any from address (for dev)
