@@ -20,6 +20,9 @@ pipeline {
             steps {
                 echo ' Starting services...'
                 sh '''
+                echo " cleaning up old containers.."
+                docker stop fastapi_app my_postgres || true
+                docker rm fastapi_app my_postgres || true
                 docker compose down || true
                 docker compose up -d
                 '''
